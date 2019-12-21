@@ -4,11 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 
 public class cameraExercise extends ApplicationAdapter {
     SpriteBatch batch;
@@ -18,6 +21,7 @@ public class cameraExercise extends ApplicationAdapter {
     float aspect_ratio;
     boolean closeupCameraIsSelected;
     public static final String TAG = cameraExercise.class.getName();
+    ShapeRenderer shRenderer;
 
     @Override
     public void create () {
@@ -28,10 +32,8 @@ public class cameraExercise extends ApplicationAdapter {
 
         closeupCamera = new OrthographicCamera();
         closeupCameraIsSelected = false;
-        Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
-        Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
-        Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
-        Gdx.app.log(TAG, "Image size: " + img.getTexture().getWidth() + ", " + img.getTexture().getHeight());
+
+        shRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -39,6 +41,22 @@ public class cameraExercise extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         float delta = Gdx.graphics.getDeltaTime();
+        Vector3 o_lt, o_lb, o_rt, o_rb; //boundaries of closeup camera in overview camera's screen.
+                                        //left-top, left-bottom, right-top, right-bottom
+
+        // Below, left-top, left-bottom, right-top, right-bottom coordinates of closeupCamera mapped to
+        // real world positions.
+        Vector3 lt = closeupCamera.unproject(new Vector3(0,0,0));
+        Vector3 lb = closeupCamera.unproject(new Vector3(0, closeupCamera.viewportHeight,0));
+        Vector3 rt = closeupCamera.unproject(new Vector3(closeupCamera.viewportWidth,0,0));
+        Vector3 rb = closeupCamera.unproject(new Vector3(closeupCamera.viewportWidth, closeupCamera.viewportHeight,0));
+
+        // World positions are mapped to overview camera positions
+        // those positions indicate corners of closeup camera's viewport on overview camera's screen
+        o_lt = overviewCamera.project(lt);
+        o_lb = overviewCamera.project(lb);
+        o_rt = overviewCamera.project(rt);
+        o_rb = overviewCamera.project(rb);
 
         if (Gdx.input.isKeyPressed(Input.Keys.M)){
             closeupCameraIsSelected = false;
@@ -56,7 +74,15 @@ public class cameraExercise extends ApplicationAdapter {
 
         batch.begin();
         img.draw(batch);
+
         batch.end();
+        shRenderer.setProjectionMatrix(overviewCamera.combined);
+        shRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shRenderer.setColor(Color.RED);
+        if (!closeupCameraIsSelected){
+            shRenderer.rect(o_lb.x, o_lb.y, o_rb.x - o_lb.x, o_lt.y - o_lb.y);
+        }
+        shRenderer.end();
     }
 
     @Override
@@ -80,10 +106,5 @@ public class cameraExercise extends ApplicationAdapter {
         closeupCamera.position.set(closeupCamera.viewportWidth/2f, closeupCamera.viewportHeight/2f, 0);
         closeupCamera.zoom = 0.5f;
 
-        Gdx.app.log(TAG, "Overview Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
-        Gdx.app.log(TAG, "Closeup Camera size: " + closeupCamera.viewportWidth + ", " + closeupCamera.viewportHeight);
-        Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
-        Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
-        Gdx.app.log(TAG, "Image size: " + img.getTexture().getWidth() + ", " + img.getTexture().getHeight());
     }
 }
