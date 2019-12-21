@@ -13,15 +13,17 @@ public class cameraExercise extends ApplicationAdapter {
     SpriteBatch batch;
     Sprite img;
     OrthographicCamera overviewCamera;
+    float aspect_ratio;
     public static final String TAG = cameraExercise.class.getName();
 
     @Override
     public void create () {
         batch = new SpriteBatch();
         img = new Sprite(new Texture("isometric_map.jpg"));
-        overviewCamera = new OrthographicCamera();
+        aspect_ratio = Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        overviewCamera = new OrthographicCamera(10 * aspect_ratio,10);
+        overviewCamera.position.set(overviewCamera.viewportWidth/2f,overviewCamera.viewportHeight/2f,0);
         Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
-
         Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
         Gdx.app.log(TAG, "Image size: " + img.getTexture().getWidth() + ", " + img.getTexture().getHeight());
     }
