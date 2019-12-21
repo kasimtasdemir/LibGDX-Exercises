@@ -20,10 +20,15 @@ public class cameraExercise extends ApplicationAdapter {
     public void create () {
         batch = new SpriteBatch();
         img = new Sprite(new Texture("isometric_map.jpg"));
-        aspect_ratio = Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        overviewCamera = new OrthographicCamera(10 * aspect_ratio,10);
+        aspect_ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        overviewCamera = new OrthographicCamera(10f * aspect_ratio,10);
+        overviewCamera.setToOrtho(false,
+                img.getTexture().getWidth() ,
+                img.getTexture().getWidth() / aspect_ratio);
         overviewCamera.position.set(overviewCamera.viewportWidth/2f,overviewCamera.viewportHeight/2f,0);
+
         Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
+        Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
         Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
         Gdx.app.log(TAG, "Image size: " + img.getTexture().getWidth() + ", " + img.getTexture().getHeight());
     }
