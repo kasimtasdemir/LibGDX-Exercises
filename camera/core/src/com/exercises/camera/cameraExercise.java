@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class cameraExercise extends ApplicationAdapter {
     SpriteBatch batch;
     Sprite img;
+    public static final String TAG = cameraExercise.class.getName();
 
     @Override
     public void create () {
         batch = new SpriteBatch();
         img = new Sprite(new Texture("isometric_map.jpg"));
+        Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
     }
 
     @Override
