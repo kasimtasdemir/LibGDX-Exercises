@@ -14,7 +14,9 @@ public class cameraExercise extends ApplicationAdapter {
     SpriteBatch batch;
     Sprite img;
     OrthographicCamera overviewCamera;
+    OrthographicCamera closeupCamera;
     float aspect_ratio;
+    boolean closeupCameraIsSelected;
     public static final String TAG = cameraExercise.class.getName();
 
     @Override
@@ -23,11 +25,9 @@ public class cameraExercise extends ApplicationAdapter {
         img = new Sprite(new Texture("isometric_map.jpg"));
         aspect_ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
         overviewCamera = new OrthographicCamera(10f * aspect_ratio,10);
-        overviewCamera.setToOrtho(false,
-                img.getTexture().getWidth() ,
-                img.getTexture().getWidth() / aspect_ratio);
-        overviewCamera.position.set(overviewCamera.viewportWidth/2f,overviewCamera.viewportHeight/2f,0);
 
+        closeupCamera = new OrthographicCamera();
+        closeupCameraIsSelected = false;
         Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
         Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
         Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
@@ -39,17 +39,21 @@ public class cameraExercise extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         float delta = Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            overviewCamera.translate(10 * delta,0);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.M)){
+            closeupCameraIsSelected = false;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Z)){
-            overviewCamera.zoom -= 0.1 * delta;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.R)){
-            overviewCamera.rotate(1 * delta);
+        if (Gdx.input.isKeyPressed(Input.Keys.N)){
+            closeupCameraIsSelected = true;
         }
         overviewCamera.update();
-        batch.setProjectionMatrix(overviewCamera.combined);
+        closeupCamera.update();
+        if (closeupCameraIsSelected){
+            batch.setProjectionMatrix(closeupCamera.combined);
+        } else {
+            batch.setProjectionMatrix(overviewCamera.combined);
+        }
+
         batch.begin();
         img.draw(batch);
         batch.end();
@@ -63,14 +67,21 @@ public class cameraExercise extends ApplicationAdapter {
     @Override
     public void resize (int width, int height){
         aspect_ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-/*        overviewCamera.setToOrtho(false,
-                img.getTexture().getWidth() ,
-                img.getTexture().getWidth() / aspect_ratio);*/
+
         overviewCamera.setToOrtho(false,
                 Gdx.graphics.getWidth() ,
                 Gdx.graphics.getHeight());
+        overviewCamera.position.set(overviewCamera.viewportWidth/2f,overviewCamera.viewportHeight/2f,0);
         overviewCamera.update();
-        Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
+
+        closeupCamera.setToOrtho(false,
+                Gdx.graphics.getWidth() ,
+                Gdx.graphics.getHeight());
+        closeupCamera.position.set(closeupCamera.viewportWidth/2f, closeupCamera.viewportHeight/2f, 0);
+        closeupCamera.zoom = 0.5f;
+
+        Gdx.app.log(TAG, "Overview Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
+        Gdx.app.log(TAG, "Closeup Camera size: " + closeupCamera.viewportWidth + ", " + closeupCamera.viewportHeight);
         Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
         Gdx.app.log(TAG, "Window size: " + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight());
         Gdx.app.log(TAG, "Image size: " + img.getTexture().getWidth() + ", " + img.getTexture().getHeight());
