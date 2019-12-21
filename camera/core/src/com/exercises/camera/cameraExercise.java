@@ -52,9 +52,12 @@ public class cameraExercise extends ApplicationAdapter {
     @Override
     public void resize (int width, int height){
         aspect_ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        overviewCamera.setToOrtho(false,
+/*        overviewCamera.setToOrtho(false,
                 img.getTexture().getWidth() ,
-                img.getTexture().getWidth() / aspect_ratio);
+                img.getTexture().getWidth() / aspect_ratio);*/
+        overviewCamera.setToOrtho(false,
+                Gdx.graphics.getWidth() ,
+                Gdx.graphics.getHeight());
         overviewCamera.update();
         Gdx.app.log(TAG, "Camera size: " + overviewCamera.viewportWidth + ", " + overviewCamera.viewportHeight);
         Gdx.app.log(TAG, "aspect ratio: " + aspect_ratio);
