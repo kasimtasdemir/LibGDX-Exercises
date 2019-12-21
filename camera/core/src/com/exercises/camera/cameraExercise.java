@@ -40,23 +40,16 @@ public class cameraExercise extends ApplicationAdapter {
     public void render () {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        overviewCamera.update();
+        closeupCamera.update();
         float delta = Gdx.graphics.getDeltaTime();
-        Vector3 o_lt, o_lb, o_rt, o_rb; //boundaries of closeup camera in overview camera's screen.
-                                        //left-top, left-bottom, right-top, right-bottom
 
         // Below, left-top, left-bottom, right-top, right-bottom coordinates of closeupCamera mapped to
         // real world positions.
-        Vector3 lt = closeupCamera.unproject(new Vector3(0,0,0));
-        Vector3 lb = closeupCamera.unproject(new Vector3(0, closeupCamera.viewportHeight,0));
-        Vector3 rt = closeupCamera.unproject(new Vector3(closeupCamera.viewportWidth,0,0));
+        Vector3 lt = closeupCamera.unproject(new Vector3(1,1,0));
+        Vector3 lb = closeupCamera.unproject(new Vector3(1, closeupCamera.viewportHeight,0));
+        Vector3 rt = closeupCamera.unproject(new Vector3(closeupCamera.viewportWidth,1,0));
         Vector3 rb = closeupCamera.unproject(new Vector3(closeupCamera.viewportWidth, closeupCamera.viewportHeight,0));
-
-        // World positions are mapped to overview camera positions
-        // those positions indicate corners of closeup camera's viewport on overview camera's screen
-        o_lt = overviewCamera.project(lt);
-        o_lb = overviewCamera.project(lb);
-        o_rt = overviewCamera.project(rt);
-        o_rb = overviewCamera.project(rb);
 
         if (Gdx.input.isKeyPressed(Input.Keys.M)){
             closeupCameraIsSelected = false;
@@ -64,8 +57,7 @@ public class cameraExercise extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.N)){
             closeupCameraIsSelected = true;
         }
-        overviewCamera.update();
-        closeupCamera.update();
+
         if (closeupCameraIsSelected){
             batch.setProjectionMatrix(closeupCamera.combined);
         } else {
@@ -80,7 +72,7 @@ public class cameraExercise extends ApplicationAdapter {
         shRenderer.begin(ShapeRenderer.ShapeType.Line);
         shRenderer.setColor(Color.RED);
         if (!closeupCameraIsSelected){
-            shRenderer.rect(o_lb.x, o_lb.y, o_rb.x - o_lb.x, o_lt.y - o_lb.y);
+            shRenderer.rect(lb.x, lb.y, (rb.x - lb.x), (lt.y - lb.y));
         }
         shRenderer.end();
     }
@@ -94,13 +86,10 @@ public class cameraExercise extends ApplicationAdapter {
     public void resize (int width, int height){
         aspect_ratio = (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
 
-        /* overviewCamera.setToOrtho(false,
-                Gdx.graphics.getWidth() ,
-                Gdx.graphics.getHeight());*/
-
         overviewCamera.setToOrtho(false,
                 img.getTexture().getHeight() * aspect_ratio ,
                 img.getTexture().getHeight());
+
         overviewCamera.position.set(overviewCamera.viewportWidth/2f,overviewCamera.viewportHeight/2f,0);
         overviewCamera.update();
 
