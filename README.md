@@ -1,2 +1,2 @@
 # LibGDX-Exercises
- My own exercises and solutions about game development using LibGDX
+ My own tutorials for myself about game development using LibGDX
