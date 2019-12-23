@@ -69,9 +69,9 @@ public class viewportExercise extends ApplicationAdapter {
                                                             // However, if it is centered, you cannot move the camera
         hudViewport.update(width, height, true);
 
-        /*Vector3 logoHeightV3 = hudViewport.project(new Vector3(0,logo.getTexture().getHeight(),0));
+        Vector3 logoHeightV3 = hudViewport.project(new Vector3(0,logo.getTexture().getHeight(),0));
         int logoHeight = (int)logoHeightV3.y;
         hudViewport.setScreenY(MathUtils.clamp(height - logoHeight,
-                0, height));*/
+                0, height));
     }
 }
