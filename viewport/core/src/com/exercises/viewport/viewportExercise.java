@@ -2,6 +2,7 @@ package com.exercises.viewport;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,6 +62,7 @@ public class viewportExercise extends ApplicationAdapter {
     public void dispose () {
         batch.dispose();
         img.getTexture().dispose();
+
     }
 
     @Override
