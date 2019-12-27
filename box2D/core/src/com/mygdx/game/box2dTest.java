@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,12 +26,14 @@ public class box2dTest extends ApplicationAdapter {
 	Box2DDebugRenderer debugRenderer;
 	OrthographicCamera camera;
 	Viewport vp;
+	Body player;
+	float MAX_VELOCITY = 1.5f;
 	
 	@Override
 	public void create () {
 		camera = new OrthographicCamera(20,20);//Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		//camera.position.set( 10f,10f,0); //Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2f,0);
-		vp = new ExtendViewport(50,50,camera);
+		vp = new ExtendViewport(5,5,camera);
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
@@ -39,20 +42,19 @@ public class box2dTest extends ApplicationAdapter {
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set(5,20);
+		bodyDef.position.set(-2,2);
 
 		Body body = world.createBody(bodyDef);
 		CircleShape circle = new CircleShape();
-		circle.setRadius(1f);
+		circle.setRadius(0.1f);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;
 		fixtureDef.density = 0.1f;
 		fixtureDef.friction = 0.2f;
-		fixtureDef.restitution = 0.3f;
+		fixtureDef.restitution = 0.6f;
 		Fixture fixture = body.createFixture(fixtureDef);
 
 		circle.dispose();
-
 
 		// Create our body definition
 		BodyDef groundBodyDef = new BodyDef();
@@ -66,7 +68,7 @@ public class box2dTest extends ApplicationAdapter {
 		PolygonShape groundBox = new PolygonShape();
 // Set the polygon shape as a box which is twice the size of our view port and 20 high
 // (setAsBox takes half-width and half-height as arguments)
-		groundBox.setAsBox(camera.viewportWidth, 1.0f);
+		groundBox.setAsBox(camera.viewportWidth, 0.2f);
 // Create a fixture from our polygon shape and add it to our ground body
 		groundBody.createFixture(groundBox, 0.0f);
 // Clean up after ourselves
@@ -75,12 +77,30 @@ public class box2dTest extends ApplicationAdapter {
 
 		Vector2 pos = body.getPosition();
 		// Apply a force of 1 meter per second on the X-axis at pos.x/pos.y of the body slowly moving it right
-		//body.applyForce(10.0f, 0.0f, pos.x, pos.y, true);
+		//body.applyForce(0.2f, 0.0f, pos.x, pos.y, true);
 
 // If we always want to apply force at the center of the body, use the following
-		//body.applyForceToCenter(1.0f, 0.0f, true);
+		//body.applyForceToCenter(0.2f, 0.0f, true);
 		// Immediately set the X-velocity to 1 meter per second causing the body to move right quickly
-		body.applyLinearImpulse(1.0f, 0, pos.x, pos.y, false);
+		body.applyLinearImpulse(0.002f, 0.01f, pos.x, pos.y, false);
+
+		//Defining a player
+		bodyDef = new BodyDef();
+		bodyDef.type =  BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(-1f,1f);
+
+		player = world.createBody(bodyDef);
+		circle = new  CircleShape();
+		circle.setRadius(0.2f);
+		fixtureDef = new FixtureDef();
+		fixtureDef.shape = circle;
+		fixtureDef.density = 0.1f;
+		fixtureDef.friction = 0.2f;
+		fixtureDef.restitution = 0.6f;
+		fixture = player.createFixture(fixtureDef);
+
+		circle.dispose();
+
 
 	}
 
@@ -88,6 +108,19 @@ public class box2dTest extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		Vector2 vel = player.getLinearVelocity();
+		Vector2 pos = player.getPosition();
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && vel.x > -MAX_VELOCITY){
+			player.applyLinearImpulse(-0.01f, 0, pos.x, pos.y, true);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && vel.x < MAX_VELOCITY){
+			player.applyLinearImpulse(0.007f, 0, pos.x, pos.y, true);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.UP) && vel.y < MAX_VELOCITY){
+			player.applyLinearImpulse(0f, 0.01f, pos.x, pos.y, true);
+		}
+
 		vp.apply();
 		world.step(1/60f,6,2);
 
