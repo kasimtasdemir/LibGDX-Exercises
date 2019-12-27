@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -85,14 +87,14 @@ public class box2dTest extends ApplicationAdapter {
 		body.applyLinearImpulse(0.002f, 0.01f, pos.x, pos.y, false);
 
 		//Defining a player
-		bodyDef = new BodyDef();
+		//bodyDef = new BodyDef();
 		bodyDef.type =  BodyDef.BodyType.DynamicBody;
 		bodyDef.position.set(-1f,1f);
 
 		player = world.createBody(bodyDef);
 		circle = new  CircleShape();
 		circle.setRadius(0.2f);
-		fixtureDef = new FixtureDef();
+		//fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;
 		fixtureDef.density = 0.1f;
 		fixtureDef.friction = 0.2f;
@@ -101,7 +103,37 @@ public class box2dTest extends ApplicationAdapter {
 
 		circle.dispose();
 
+		// Joint
+		// bodyJointA
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(0f,2f);
+		PolygonShape polygonShape = new PolygonShape();
+		polygonShape.setAsBox(0.1f,0.1f);
+		fixtureDef.shape = polygonShape;
+		fixtureDef.density = 0.1f;
+		fixtureDef.friction = 0.2f;
+		fixtureDef.restitution = 0.3f;
+		Body bodyJointA = world.createBody(bodyDef);
+		bodyJointA.createFixture(fixtureDef);
 
+		//bodyJointB
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(1f,3f);
+		polygonShape.setAsBox(0.1f,0.1f);
+		fixtureDef.shape = polygonShape;
+		fixtureDef.density = 0.1f;
+		fixtureDef.friction = 0.2f;
+		fixtureDef.restitution = 0.3f;
+		Body bodyJointB = world.createBody(bodyDef);
+		bodyJointB.createFixture(fixtureDef);
+
+		//Joint
+		DistanceJointDef defJoint = new DistanceJointDef ();
+		defJoint.length = 0;
+		defJoint.initialize(bodyJointA, bodyJointB, bodyJointA.getPosition(),
+				new Vector2(bodyJointB.getPosition().x,bodyJointB.getPosition().y +0.1f) );
+
+		DistanceJoint joint = (DistanceJoint) world.createJoint(defJoint);
 	}
 
 	@Override
