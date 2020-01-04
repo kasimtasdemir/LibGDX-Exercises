@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
     Box2DDebugRenderer debugRenderer;
     Body player;
 
-    float MAX_VELOCITY = 1.5f;
+    float MAX_VELOCITY = 5f;
     private final float PPM = 100;
 
     @Override
@@ -120,10 +120,12 @@ public class MyGdxGame extends ApplicationAdapter {
         Vector2 vel = player.getLinearVelocity();
         Vector2 pos = player.getPosition();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && vel.x > -MAX_VELOCITY){
-            player.applyLinearImpulse(-0.01f, 0, pos.x, pos.y, true);
+            //player.applyLinearImpulse(-0.01f, 0, pos.x, pos.y, true);
+            player.setLinearVelocity(-3,player.getLinearVelocity().y);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && vel.x < MAX_VELOCITY){
-            player.applyLinearImpulse(0.007f, 0, pos.x, pos.y, true);
+            //player.applyLinearImpulse(0.007f, 0, pos.x, pos.y, true);
+            player.setLinearVelocity(3,player.getLinearVelocity().y);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && vel.y < MAX_VELOCITY){
             player.applyLinearImpulse(0f, 0.01f, pos.x, pos.y, true);
