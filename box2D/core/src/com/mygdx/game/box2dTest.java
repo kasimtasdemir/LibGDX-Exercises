@@ -18,6 +18,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
+import com.badlogic.gdx.physics.box2d.joints.FrictionJoint;
+import com.badlogic.gdx.physics.box2d.joints.FrictionJointDef;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -134,6 +136,39 @@ public class box2dTest extends ApplicationAdapter {
 				new Vector2(bodyJointB.getPosition().x,bodyJointB.getPosition().y +0.1f) );
 
 		DistanceJoint joint = (DistanceJoint) world.createJoint(defJoint);
+
+		// Friction joint
+		// bodyJointA
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(2f,2f);
+		polygonShape = new PolygonShape();
+		polygonShape.setAsBox(0.1f,0.1f);
+		fixtureDef.shape = polygonShape;
+		fixtureDef.density = 0.1f;
+		fixtureDef.friction = 0.2f;
+		fixtureDef.restitution = 0.3f;
+		Body bodyFrictionA = world.createBody(bodyDef);
+		bodyFrictionA.createFixture(fixtureDef);
+
+		//bodyJointB
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(3f,2f);
+		polygonShape.setAsBox(0.1f,0.1f);
+		fixtureDef.shape = polygonShape;
+		fixtureDef.density = 0.1f;
+		fixtureDef.friction = 0.2f;
+		fixtureDef.restitution = 0.3f;
+		Body bodyFrictionB = world.createBody(bodyDef);
+		bodyFrictionB.createFixture(fixtureDef);
+
+		//Friction Joint
+		FrictionJointDef frictionJointDef = new FrictionJointDef ();
+		frictionJointDef.maxForce = 0.5f;
+		frictionJointDef.maxTorque = 0.5f;
+		frictionJointDef.initialize(bodyFrictionA,bodyFrictionB,new Vector2(2.5f,3f));
+
+		FrictionJoint frictionJoint = (FrictionJoint) world.createJoint(frictionJointDef);
+
 	}
 
 	@Override
