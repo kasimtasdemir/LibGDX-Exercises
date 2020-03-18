@@ -1,11 +1,14 @@
 package com.kasim.myfirstgame.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
-public class WorldController {
+public class WorldController extends InputAdapter {
     private static final String TAG =
             WorldController.class.getName();
 
@@ -18,6 +21,7 @@ public class WorldController {
     }
     private void init () {
         initTestObjects();
+        Gdx.input.setInputProcessor(this);
     }
 
     private void initTestObjects() {
@@ -72,5 +76,20 @@ public class WorldController {
         rotation %= 360;
         // Set new rotation value to selected sprite
         testSprites[selectedSprite].setRotation(rotation);
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        // Reset game world
+        if (keycode == Input.Keys.R) {
+            init();
+            Gdx.app.debug(TAG, "Game world resetted");
+        }
+        // Select next sprite
+        else if (keycode == Input.Keys.SPACE) {
+            selectedSprite = (selectedSprite + 1) % testSprites.length;
+            Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+        }
+        return false;
     }
 }
