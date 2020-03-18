@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.kasim.myfirstgame.util.CameraHelper;
 
 public class WorldController extends InputAdapter {
     private static final String TAG =
@@ -15,6 +16,7 @@ public class WorldController extends InputAdapter {
     // Test
     public Sprite[] testSprites;
     public int selectedSprite;
+    public CameraHelper cameraHelper;
 
     public WorldController () {
         init();
@@ -22,6 +24,7 @@ public class WorldController extends InputAdapter {
     private void init () {
         initTestObjects();
         Gdx.input.setInputProcessor(this);
+        cameraHelper = new CameraHelper();
     }
 
     private void initTestObjects() {
@@ -66,6 +69,7 @@ public class WorldController extends InputAdapter {
     }
     public void update (float deltaTime) {
         updateTestObjects(deltaTime);
+        cameraHelper.update(deltaTime);
     }
     private void updateTestObjects(float deltaTime) {
         // Get current rotation from selected sprite
@@ -89,6 +93,15 @@ public class WorldController extends InputAdapter {
         else if (keycode == Input.Keys.SPACE) {
             selectedSprite = (selectedSprite + 1) % testSprites.length;
             Gdx.app.debug(TAG, "Sprite #" + selectedSprite + " selected");
+            if (cameraHelper.hasTarget()) {
+                cameraHelper.setTarget(testSprites[selectedSprite]);
+            }
+
+        }
+        // Toggle camera follow
+        else if (keycode == Input.Keys.ENTER) {
+            cameraHelper.setTarget(cameraHelper.hasTarget() ? null : testSprites[selectedSprite]);
+            Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
         }
         return false;
     }
