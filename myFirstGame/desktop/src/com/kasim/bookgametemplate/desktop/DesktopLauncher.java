@@ -1,8 +1,8 @@
-package com.kasim.myfirstgame.desktop;
+package com.kasim.bookgametemplate.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.kasim.myfirstgame.myFirstGame;
+import com.kasim.bookgametemplate.myFirstGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

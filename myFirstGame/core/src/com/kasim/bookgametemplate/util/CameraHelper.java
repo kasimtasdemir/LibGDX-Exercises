@@ -1,4 +1,4 @@
-package com.kasim.myfirstgame.util;
+package com.kasim.bookgametemplate.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;

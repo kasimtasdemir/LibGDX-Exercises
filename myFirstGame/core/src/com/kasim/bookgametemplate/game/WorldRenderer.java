@@ -1,10 +1,10 @@
-package com.kasim.myfirstgame.game;
+package com.kasim.bookgametemplate.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
-import com.kasim.myfirstgame.util.Constants;
+import com.kasim.bookgametemplate.util.Constants;
 
 public class WorldRenderer implements Disposable {
     private OrthographicCamera camera;
@@ -22,10 +22,13 @@ public class WorldRenderer implements Disposable {
     public void render () {
         renderTestObjects();
     }
-    private void renderTestObjects() { batch.setProjectionMatrix(camera.combined); batch.begin();
+    private void renderTestObjects() {
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
         worldController.cameraHelper.applyTo(camera);
         for(Sprite sprite : worldController.testSprites) {
-            sprite.draw(batch); }
+            sprite.draw(batch);
+        }
         batch.end(); }
     public void resize (int width, int height) {
         camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;

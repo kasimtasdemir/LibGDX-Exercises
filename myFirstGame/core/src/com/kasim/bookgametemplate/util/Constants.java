@@ -1,4 +1,4 @@
-package com.kasim.myfirstgame.util;
+package com.kasim.bookgametemplate.util;
 
 public class Constants {
     // Visible game world is 5 meters wide
