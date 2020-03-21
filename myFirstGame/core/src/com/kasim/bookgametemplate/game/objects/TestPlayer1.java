@@ -8,27 +8,27 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.kasim.bookgametemplate.game.Assets;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
-public class TestBox2DDynamicObject extends AbstractDrawableObject {
+public class TestPlayer1 extends AbstractDrawableObject {
     World box2dWorld;
     Body body;
-    private TextureRegion testBox;
-    public TestBox2DDynamicObject(World box2dWorld){
+    public TestPlayer1(World box2dWorld){
         this.box2dWorld = box2dWorld;
         init();
     }
-
     public void init() {
-        dimension.set(1f, 1f);
+        TextureRegion tempReg = (TextureRegion) Assets.instance.testPlayer1.runningRightAnimation.getKeyFrame(0);
+        dimension.set(1f, 1f/tempReg.getRegionWidth()*tempReg.getRegionHeight());
         rotation = 0;
         scale.set(1, 1);
-        position.set(0f, 0f);
+        position.set(-1f, 1f);
         positionOffset.set(-dimension.x / 2, -dimension.y / 2);
         position.add(positionOffset);
         origin.set(dimension.x / 2, dimension.y / 2);
-        testBox = Assets.instance.testObjectBox.box;
+
         // First we create a body definition
         BodyDef bodyDef = new BodyDef();
         // We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
@@ -48,7 +48,7 @@ public class TestBox2DDynamicObject extends AbstractDrawableObject {
         fixtureDef.shape = circle;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
+        fixtureDef.restitution = 0.8f; // Make it bounce a little bit
 
         // Create our fixture and attach it to the body
         Fixture fixture = body.createFixture(fixtureDef);
@@ -57,23 +57,23 @@ public class TestBox2DDynamicObject extends AbstractDrawableObject {
         // BodyDef and FixtureDef don't need disposing, but shapes do.
         circle.dispose();
 
-        body.setLinearVelocity(0.2f, 0.3f);
+        body.setLinearVelocity(0.03f, 0.3f);
     }
-
     @Override
     public void render(SpriteBatchWDebug batch) {
-        TextureRegion reg = null;
+        TextureRegion region;
+        float runTimeSeconds = MathUtils.nanoToSec * TimeUtils.nanoTime();
+        region = (TextureRegion) Assets.instance.testPlayer1.runningRightAnimation.getKeyFrame(runTimeSeconds*3);
         position = body.getPosition().add(positionOffset);
         rotation = body.getAngle()* MathUtils.radiansToDegrees;
-        reg = testBox;
-        batch.draw(reg.getTexture(),
+        batch.draw(region.getTexture(),
                 position.x, position.y,
                 origin.x, origin.y,
                 dimension.x, dimension.y,
                 scale.x, scale.y,
-                rotation,
-                reg.getRegionX(), reg.getRegionY(),
-                reg.getRegionWidth(), reg.getRegionHeight(),
+                0,//rotation,
+                region.getRegionX(), region.getRegionY(),
+                region.getRegionWidth(), region.getRegionHeight(),
                 false, false);
 
     }

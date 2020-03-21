@@ -5,7 +5,9 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.util.Constants;
 
@@ -16,6 +18,7 @@ public class Assets implements Disposable, AssetErrorListener {
 
     // objects
     public AssetTestObjectBox testObjectBox;
+    public AssetTestPlayer1 testPlayer1;
 
     private static final Assets ourInstance = new Assets();
 
@@ -48,6 +51,7 @@ public class Assets implements Disposable, AssetErrorListener {
             Gdx.app.debug(TAG, "Texture: " + t);
         }
         testObjectBox = new AssetTestObjectBox(atlas);
+        testPlayer1 = new AssetTestPlayer1(atlas);
     }
     @Override
     public void dispose () {
@@ -63,9 +67,28 @@ public class Assets implements Disposable, AssetErrorListener {
         public final TextureAtlas.AtlasRegion box;
 
         public AssetTestObjectBox(TextureAtlas atlas) {
-            box = atlas.findRegion("crate");
+            // box = atlas.findRegion("crate");
+            box = atlas.findRegion("wall_mid");
+
             Gdx.app.debug(TAG, "test box width: " + box.getRegionWidth());
         }
+    }
+    public class AssetTestPlayer1{
+        public Animation runningRightAnimation;
+        public AssetTestPlayer1(TextureAtlas atlas) {
+
+            Array<TextureAtlas.AtlasRegion> runningRightFrames = new Array<TextureAtlas.AtlasRegion>();
+            runningRightFrames.add(atlas.findRegion("big_zombie_run_anim_f0"));
+            runningRightFrames.add(atlas.findRegion("big_zombie_run_anim_f1"));
+            runningRightFrames.add(atlas.findRegion("big_zombie_run_anim_f2"));
+            runningRightFrames.add(atlas.findRegion("big_zombie_run_anim_f3"));
+
+            runningRightAnimation = new Animation(
+                    0.25f, runningRightFrames, Animation.PlayMode.LOOP);
+
+            Gdx.app.debug(TAG, "Player 1 run animation loaded." );
+        }
+
     }
 
 }
