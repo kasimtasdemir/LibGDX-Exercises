@@ -3,12 +3,14 @@ package com.kasim.bookgametemplate;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.kasim.bookgametemplate.game.Assets;
 import com.kasim.bookgametemplate.game.WorldController;
 import com.kasim.bookgametemplate.game.WorldRenderer;
 
-public class myFirstGame extends ApplicationAdapter {
-    private static final String TAG = myFirstGame.class.getName();
+public class BookGameTemplate extends ApplicationAdapter {
+    private static final String TAG = BookGameTemplate.class.getName();
 
     private WorldController worldController;
     private WorldRenderer worldRenderer;
@@ -19,12 +21,12 @@ public class myFirstGame extends ApplicationAdapter {
     public void create () {
         // Set Libgdx log level to DEBUG
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Assets.instance.init(new AssetManager());
         // Initialize controller and renderer
         worldController = new WorldController();
         worldRenderer = new WorldRenderer(worldController);
         // Game world is active on start
         paused = false;
-
     }
 
     @Override
@@ -48,6 +50,7 @@ public class myFirstGame extends ApplicationAdapter {
     @Override
     public void dispose () {
         worldRenderer.dispose();
+        Assets.instance.dispose();
     }
 
     @Override
@@ -63,5 +66,6 @@ public class myFirstGame extends ApplicationAdapter {
     @Override
     public void resume() {
         paused = false;
+        Assets.instance.init(new AssetManager());
     }
 }

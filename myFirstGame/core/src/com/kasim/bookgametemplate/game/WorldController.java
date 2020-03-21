@@ -6,7 +6,9 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.kasim.bookgametemplate.util.CameraHelper;
 
 public class WorldController extends InputAdapter {
@@ -52,6 +54,20 @@ public class WorldController extends InputAdapter {
         }
         // Set first sprite as selected one
         selectedSprite = 0;
+
+        Array<TextureRegion> regions = new Array<TextureRegion>();
+        regions.add(Assets.instance.testObjectBox.box);
+
+
+        Sprite spr = new Sprite(regions.random());
+        spr.setSize(1, 1);
+        // Set origin to sprite's center
+        spr.setOrigin(spr.getWidth() / 2.0f,spr.getHeight() / 2.0f);
+        // Calculate random position for sprite
+        float randomX = MathUtils.random(-2.0f, 2.0f);
+        float randomY = MathUtils.random(-2.0f, 2.0f);
+        spr.setPosition(randomX, randomY);
+        testSprites[0] = spr;
     }
     private Pixmap createProceduralPixmap (int width, int height) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
