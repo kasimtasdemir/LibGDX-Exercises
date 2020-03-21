@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.kasim.bookgametemplate.game.Assets;
+import com.kasim.bookgametemplate.game.InputManager;
 import com.kasim.bookgametemplate.game.WorldController;
 import com.kasim.bookgametemplate.game.WorldRenderer;
 
@@ -14,6 +15,7 @@ public class BookGameTemplate extends ApplicationAdapter {
 
     private WorldController worldController;
     private WorldRenderer worldRenderer;
+    private InputManager inputManager;
     private boolean paused;
 
 
@@ -25,6 +27,7 @@ public class BookGameTemplate extends ApplicationAdapter {
         // Initialize controller and renderer
         worldController = new WorldController();
         worldRenderer = new WorldRenderer(worldController);
+        inputManager = new InputManager(worldController);
         // Game world is active on start
         paused = false;
     }

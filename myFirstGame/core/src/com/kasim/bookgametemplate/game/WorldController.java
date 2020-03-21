@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.kasim.bookgametemplate.util.CameraHelper;
 
-public class WorldController extends InputAdapter {
+public class WorldController {
     private static final String TAG =
             WorldController.class.getName();
 
@@ -18,7 +18,6 @@ public class WorldController extends InputAdapter {
 
     private void init() {
         level = new Level();
-        Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
     }
 
@@ -27,20 +26,9 @@ public class WorldController extends InputAdapter {
         cameraHelper.update(deltaTime);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        // Reset game world
-        if (keycode == Input.Keys.R) {
-            init();
-            Gdx.app.debug(TAG, "Game world resetted");
-        }
-        // Select next sprite
-        else if (keycode == Input.Keys.SPACE) {
-
-        }
-        // Toggle camera follow
-        else if (keycode == Input.Keys.ENTER) {
-        }
-        return false;
+    public void userRequest_resetGame(){
+        Gdx.app.debug(TAG, "User request: " + "Game world reset");
     }
+
+
 }

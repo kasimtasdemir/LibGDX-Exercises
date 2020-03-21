@@ -7,7 +7,7 @@ import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
 public class TestObjectBox extends AbstractDrawableObject {
     private TextureRegion testBox;
-    public static final String TAG = Assets.class.getName();
+    public static final String TAG = TestObjectBox.class.getName();
 
     public TestObjectBox() {
         init();
