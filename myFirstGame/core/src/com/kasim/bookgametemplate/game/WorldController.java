@@ -19,19 +19,21 @@ public class WorldController extends InputAdapter {
     public Sprite[] testSprites;
     public int selectedSprite;
     public CameraHelper cameraHelper;
+    public Level level;
 
     public WorldController () {
         init();
     }
     private void init () {
         initTestObjects();
+        level = new Level();
         Gdx.input.setInputProcessor(this);
         cameraHelper = new CameraHelper();
     }
 
     private void initTestObjects() {
         // Create new array for 5 sprites
-        testSprites = new Sprite[5];
+        /*testSprites = new Sprite[5];
         // Create empty POT-sized Pixmap with 8 bit RGBA pixel data
         int width = 32;
         int height = 32;
@@ -67,7 +69,7 @@ public class WorldController extends InputAdapter {
         float randomX = MathUtils.random(-2.0f, 2.0f);
         float randomY = MathUtils.random(-2.0f, 2.0f);
         spr.setPosition(randomX, randomY);
-        testSprites[0] = spr;
+        testSprites[0] = spr;*/
     }
     private Pixmap createProceduralPixmap (int width, int height) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
@@ -84,7 +86,7 @@ public class WorldController extends InputAdapter {
         return pixmap;
     }
     public void update (float deltaTime) {
-        updateTestObjects(deltaTime);
+        //updateTestObjects(deltaTime);
         cameraHelper.update(deltaTime);
     }
     private void updateTestObjects(float deltaTime) {
