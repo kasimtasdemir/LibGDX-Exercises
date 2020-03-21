@@ -2,6 +2,7 @@ package com.kasim.bookgametemplate.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
 public abstract class AbstractDrawableObject {
     public Vector2 position;
@@ -18,6 +19,6 @@ public abstract class AbstractDrawableObject {
     }
     public void update (float deltaTime) {
     }
-    public abstract void render (SpriteBatch batch);
+    public abstract void render (SpriteBatchWDebug batch);
 
 }

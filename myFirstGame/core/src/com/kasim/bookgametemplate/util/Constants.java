@@ -7,4 +7,5 @@ public class Constants {
     public static final float VIEWPORT_HEIGHT = 5.0f;
     public static final String TEXTURE_ATLAS_OBJECTS =
             "images/0x72_Dungeon_TexturePackerAtlas.atlas";
+    public static final boolean RENDER_DEBUG_ENABLED = true;
 }

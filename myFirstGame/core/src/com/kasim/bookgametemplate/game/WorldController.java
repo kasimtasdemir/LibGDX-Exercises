@@ -87,9 +87,10 @@ public class WorldController extends InputAdapter {
     }
     public void update (float deltaTime) {
         //updateTestObjects(deltaTime);
+        level.update(deltaTime);
         cameraHelper.update(deltaTime);
     }
-    private void updateTestObjects(float deltaTime) {
+    /*private void updateTestObjects(float deltaTime) {
         // Get current rotation from selected sprite
         float rotation = testSprites[selectedSprite].getRotation();
         // Rotate sprite by 90 degrees per second
@@ -98,7 +99,7 @@ public class WorldController extends InputAdapter {
         rotation %= 360;
         // Set new rotation value to selected sprite
         testSprites[selectedSprite].setRotation(rotation);
-    }
+    }*/
 
     @Override
     public boolean keyDown(int keycode) {

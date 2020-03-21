@@ -5,40 +5,32 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.util.Constants;
+import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
 public class WorldRenderer implements Disposable {
     private OrthographicCamera camera;
-    private SpriteBatch batch;
+    private SpriteBatchWDebug batch;
     private WorldController worldController;
     public WorldRenderer (WorldController worldController) {
         this.worldController = worldController;
         init();
     }
     private void init () {
-        batch = new SpriteBatch();
+        batch = new SpriteBatchWDebug();
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
                 Constants.VIEWPORT_HEIGHT); camera.position.set(0, 0, 0); camera.update();
     }
     public void render () {
-        //renderTestObjects();
         renderWorld(batch);
     }
-    private void renderWorld (SpriteBatch batch) {
+    private void renderWorld (SpriteBatchWDebug batch) {
         worldController.cameraHelper.applyTo(camera);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         worldController.level.render(batch);
         batch.end();
     }
-    private void renderTestObjects() {
-/*        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        worldController.cameraHelper.applyTo(camera);
-        for(Sprite sprite : worldController.testSprites) {
-            sprite.draw(batch);
-        }
-        batch.end(); */
-    }
+
     public void resize (int width, int height) {
         camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
         camera.update();
