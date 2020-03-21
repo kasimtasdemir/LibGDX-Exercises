@@ -1,6 +1,5 @@
 package com.kasim.bookgametemplate.game.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
@@ -10,15 +9,18 @@ public abstract class AbstractDrawableObject {
     public Vector2 origin;
     public Vector2 scale;
     public float rotation;
-    public AbstractDrawableObject () {
+
+    public AbstractDrawableObject() {
         position = new Vector2();
         dimension = new Vector2(1, 1);
         origin = new Vector2();
         scale = new Vector2(1, 1);
         rotation = 0;
     }
-    public void update (float deltaTime) {
+
+    public void update(float deltaTime) {
     }
-    public abstract void render (SpriteBatchWDebug batch);
+
+    public abstract void render(SpriteBatchWDebug batch);
 
 }

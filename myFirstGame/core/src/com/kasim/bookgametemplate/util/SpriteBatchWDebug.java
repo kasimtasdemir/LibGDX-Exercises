@@ -19,28 +19,22 @@ public class SpriteBatchWDebug extends SpriteBatch {
         drawDebugBox(texture, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
     }
 
-    void drawDebugBox(Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation){
+    void drawDebugBox(Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation) {
         if (!Constants.RENDER_DEBUG_ENABLED)
             return;
-        Pixmap pixmap = createPixmapBox(50,(int) (50/width*height));//(texture.getWidth()/4, texture.getHeight()/4);
+        Pixmap pixmap = createPixmapBox(50, (int) (50 / width * height));//(texture.getWidth()/4, texture.getHeight()/4);
         Texture boxTexture = new Texture(pixmap);
         Sprite spr = new Sprite(boxTexture);
-        //spr.setSize(width, height);
-        //spr.setOrigin(spr.getWidth() / 2.0f, spr.getHeight() / 2.0f);
-        super.draw(spr,x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        super.draw(spr, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        //boxTexture.dispose(); // TODO: I think this is leaking. Must dispose boxTexture
+        pixmap.dispose();
     }
-    private Pixmap createPixmapBox (int width, int height) {
+
+    private Pixmap createPixmapBox(int width, int height) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        // Fill square with red color at 50% opacity
-        //pixmap.setColor(1, 0, 0, 0.5f);
-        //pixmap.fill();
-        // Draw a yellow-colored X shape on square
-        /*pixmap.setColor(1, 1, 0, 1);
-        pixmap.drawLine(0, 0, width, height);
-        pixmap.drawLine(width, 0, 0, height);*/
-        // Draw a cyan-colored border around square
         pixmap.setColor(1, 0, 0, 0.5f);
         pixmap.drawRectangle(0, 0, width, height);
         return pixmap;
     }
+
 }

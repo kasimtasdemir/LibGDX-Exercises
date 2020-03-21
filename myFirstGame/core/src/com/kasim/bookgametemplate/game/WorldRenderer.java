@@ -11,19 +11,25 @@ public class WorldRenderer implements Disposable {
     private OrthographicCamera camera;
     private SpriteBatchWDebug batch;
     private WorldController worldController;
-    public WorldRenderer (WorldController worldController) {
+
+    public WorldRenderer(WorldController worldController) {
         this.worldController = worldController;
         init();
     }
-    private void init () {
+
+    private void init() {
         batch = new SpriteBatchWDebug();
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
-                Constants.VIEWPORT_HEIGHT); camera.position.set(0, 0, 0); camera.update();
+                Constants.VIEWPORT_HEIGHT);
+        camera.position.set(0, 0, 0);
+        camera.update();
     }
-    public void render () {
+
+    public void render() {
         renderWorld(batch);
     }
-    private void renderWorld (SpriteBatchWDebug batch) {
+
+    private void renderWorld(SpriteBatchWDebug batch) {
         worldController.cameraHelper.applyTo(camera);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -31,10 +37,11 @@ public class WorldRenderer implements Disposable {
         batch.end();
     }
 
-    public void resize (int width, int height) {
+    public void resize(int width, int height) {
         camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
         camera.update();
     }
+
     @Override
     public void dispose() {
         batch.dispose();

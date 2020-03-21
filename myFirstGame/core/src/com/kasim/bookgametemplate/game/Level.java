@@ -13,14 +13,17 @@ public class Level {
     public Level() {
         init();
     }
-    public void init(){
+
+    public void init() {
         testObjectBox = new TestObjectBox();
         Gdx.app.debug(TAG, "Level->init() testObjectBox dimension: " + testObjectBox.dimension);
     }
-    public void render (SpriteBatchWDebug batch) {
+
+    public void render(SpriteBatchWDebug batch) {
         testObjectBox.render(batch);
     }
-    public void update (float deltaTime) {
+
+    public void update(float deltaTime) {
         testObjectBox.update(deltaTime);
     }
 }

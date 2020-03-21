@@ -18,7 +18,7 @@ public class BookGameTemplate extends ApplicationAdapter {
 
 
     @Override
-    public void create () {
+    public void create() {
         // Set Libgdx log level to DEBUG
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         Assets.instance.init(new AssetManager());
@@ -30,7 +30,7 @@ public class BookGameTemplate extends ApplicationAdapter {
     }
 
     @Override
-    public void render () {
+    public void render() {
 
         // Do not update game world when paused.
         if (!paused) {
@@ -39,8 +39,8 @@ public class BookGameTemplate extends ApplicationAdapter {
             worldController.update(Gdx.graphics.getDeltaTime());
         }
         // Sets the clear screen color to: Cornflower Blue
-        Gdx.gl.glClearColor(0x64/255.0f, 0x95/255.0f, 0xed/255.0f,
-                0xff/255.0f);
+        Gdx.gl.glClearColor(0x64 / 255.0f, 0x95 / 255.0f, 0xed / 255.0f,
+                0xff / 255.0f);
         // Clears the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // Render game world to screen
@@ -48,13 +48,14 @@ public class BookGameTemplate extends ApplicationAdapter {
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         worldRenderer.dispose();
         Assets.instance.dispose();
     }
 
     @Override
     public void resize(int width, int height) {
+
         worldRenderer.resize(width, height);
     }
 
