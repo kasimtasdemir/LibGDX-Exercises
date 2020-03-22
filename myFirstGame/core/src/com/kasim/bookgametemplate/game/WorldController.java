@@ -1,8 +1,7 @@
 package com.kasim.bookgametemplate.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
@@ -12,11 +11,13 @@ public class WorldController implements Disposable {
     private static final String TAG =
             WorldController.class.getName();
 
+    private Game game;
     public CameraHelper cameraHelper;
     public Level level;
     public World box2dWorld;
 
-    public WorldController() {
+    public WorldController(Game game) {
+        this.game = game;
         init();
     }
 
@@ -38,5 +39,9 @@ public class WorldController implements Disposable {
     @Override
     public void dispose() {
         box2dWorld.dispose();
+    }
+
+    private void backToMenu () {
+// switch to menu screen game.setScreen(new MenuScreen(game));
     }
 }
