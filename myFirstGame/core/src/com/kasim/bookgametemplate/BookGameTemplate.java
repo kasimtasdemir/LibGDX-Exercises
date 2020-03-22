@@ -10,13 +10,17 @@ import com.kasim.bookgametemplate.screen.MenuScreen;
 
 public class BookGameTemplate extends Game {
     private static final String TAG = BookGameTemplate.class.getName();
+    public MenuScreen menuScreen;
+    public GameScreen gameScreen;
 
     @Override
     public void create() {
         // Set Libgdx log level to DEBUG
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         Assets.instance.init(new AssetManager());
-        setScreen(new MenuScreen(this));
+        menuScreen = new MenuScreen(this);
+        gameScreen = new GameScreen(this);
+        setScreen(menuScreen);
         //setScreen(new GameScreen(this));
     }
 

@@ -5,18 +5,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.kasim.bookgametemplate.BookGameTemplate;
+import com.kasim.bookgametemplate.screen.MenuScreen;
 import com.kasim.bookgametemplate.util.CameraHelper;
 
 public class WorldController implements Disposable {
     private static final String TAG =
             WorldController.class.getName();
 
-    private Game game;
+    private BookGameTemplate game;
     public CameraHelper cameraHelper;
     public Level level;
     public World box2dWorld;
 
-    public WorldController(Game game) {
+    public WorldController(BookGameTemplate game) {
         this.game = game;
         init();
     }
@@ -41,7 +43,8 @@ public class WorldController implements Disposable {
         box2dWorld.dispose();
     }
 
-    private void backToMenu () {
-// switch to menu screen game.setScreen(new MenuScreen(game));
+    public void backToMenu () {
+        // switch to menu screen
+        game.setScreen(game.menuScreen);
     }
 }

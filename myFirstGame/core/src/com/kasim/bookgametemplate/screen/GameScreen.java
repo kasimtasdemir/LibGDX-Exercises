@@ -3,6 +3,7 @@ package com.kasim.bookgametemplate.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.kasim.bookgametemplate.BookGameTemplate;
 import com.kasim.bookgametemplate.game.InputManager;
 import com.kasim.bookgametemplate.game.WorldController;
 import com.kasim.bookgametemplate.game.WorldRenderer;
@@ -12,10 +13,12 @@ public class GameScreen extends AbstractGameScreen {
     private WorldController worldController;
     private WorldRenderer worldRenderer;
     private InputManager inputManager;
+    private BookGameTemplate game;
     private boolean paused;
 
-    public GameScreen(Game game) {
+    public GameScreen(BookGameTemplate game) {
         super(game);
+        this.game = game;
     }
 
     @Override

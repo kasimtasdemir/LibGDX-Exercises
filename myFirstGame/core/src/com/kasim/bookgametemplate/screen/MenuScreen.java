@@ -3,11 +3,12 @@ package com.kasim.bookgametemplate.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.kasim.bookgametemplate.BookGameTemplate;
 
 public class MenuScreen extends AbstractGameScreen {
     private static final String TAG = MenuScreen.class.getName();
-    private Game game;
-    public MenuScreen (Game game) {
+    private BookGameTemplate game;
+    public MenuScreen (BookGameTemplate game) {
         super(game);
         this.game = game;
     }
@@ -16,7 +17,7 @@ public class MenuScreen extends AbstractGameScreen {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isTouched())
-            game.setScreen(new GameScreen(game));
+            game.setScreen(game.gameScreen);
     }
     @Override public void resize (int width, int height) {
 

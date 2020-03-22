@@ -31,6 +31,11 @@ public class InputManager extends InputAdapter {
         // Toggle camera follow
         else if (keycode == Input.Keys.ENTER) {
         }
+        else if (keycode == Input.Keys.ESCAPE) {
+            //change to menu screen
+            Gdx.app.debug(TAG, "User request: " + "Back to menu");
+            worldController.backToMenu();
+        }
         return false;
     }
 }
