@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.util.Constants;
@@ -19,6 +21,7 @@ public class Assets implements Disposable, AssetErrorListener {
     // objects
     public AssetTestObjectBox testObjectBox;
     public AssetTestPlayer1 testPlayer1;
+    public AssetUISkin uiSkin;
 
     private static final Assets ourInstance = new Assets();
 
@@ -37,6 +40,10 @@ public class Assets implements Disposable, AssetErrorListener {
         assetManager.setErrorListener(this);
         // load texture atlas
         assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
+        // Load skins
+        //assetManager.load(Constants.TEXTURE_ATLAS_SKIN_LIBGDX_UI, TextureAtlas.class);
+        assetManager.load(Constants.SKIN_LIBGDX_UI, Skin.class, new SkinLoader.SkinParameter(Constants.TEXTURE_ATLAS_SKIN_LIBGDX_UI));
+
         // start loading assets and wait until finished
         assetManager.finishLoading();
         Gdx.app.debug(TAG, "# of assets loaded: "
@@ -48,10 +55,16 @@ public class Assets implements Disposable, AssetErrorListener {
         // enable texture filtering for pixel smoothing
         for (Texture t : atlas.getTextures()) {
             t.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            Gdx.app.debug(TAG, "Texture: " + t);
+            Gdx.app.debug(TAG, "Atlas Texture: " + t);
         }
+
+        Skin skin = assetManager.get(Constants.SKIN_LIBGDX_UI);
+
         testObjectBox = new AssetTestObjectBox(atlas);
         testPlayer1 = new AssetTestPlayer1(atlas);
+        uiSkin = new AssetUISkin(skin);
+
+
     }
     @Override
     public void dispose () {
@@ -89,6 +102,15 @@ public class Assets implements Disposable, AssetErrorListener {
             Gdx.app.debug(TAG, "Player 1 run animation loaded." );
         }
 
+    }
+    public class AssetUISkin {
+        //public final TextureAtlas.AtlasRegion box;
+        public Skin skin;
+
+        public AssetUISkin(Skin skin) {
+            this.skin = skin;
+            //Gdx.app.debug(TAG, "test box width: " + box.getRegionWidth());
+        }
     }
 
 }

@@ -8,4 +8,8 @@ public class Constants {
     public static final String TEXTURE_ATLAS_OBJECTS =
             "images/0x72_Dungeon_TexturePackerAtlas.atlas";
     public static final boolean RENDER_DEBUG_ENABLED = true;
+    public static final String SKIN_LIBGDX_UI =
+            "skin/uiskin.json";
+    public static final String TEXTURE_ATLAS_SKIN_LIBGDX_UI =
+            "skin/uiskin.atlas";
 }

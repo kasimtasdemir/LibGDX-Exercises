@@ -2,19 +2,35 @@ package com.kasim.bookgametemplate.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kasim.bookgametemplate.BookGameTemplate;
+import com.kasim.bookgametemplate.game.Assets;
 import com.kasim.bookgametemplate.game.InputManager;
 import com.kasim.bookgametemplate.game.WorldController;
 import com.kasim.bookgametemplate.game.WorldRenderer;
+import com.kasim.bookgametemplate.ui.TestWindow;
 
 public class GameScreen extends AbstractGameScreen {
     private static final String TAG = GameScreen.class.getName();
     private WorldController worldController;
     private WorldRenderer worldRenderer;
-    private InputManager inputManager;
+    public InputManager inputManager;
     private BookGameTemplate game;
     private boolean paused;
+
+
+    public Stage stage; // For UI
+    private TestWindow testWindow;
 
     public GameScreen(BookGameTemplate game) {
         super(game);
@@ -27,12 +43,14 @@ public class GameScreen extends AbstractGameScreen {
         if (!paused) {
             // Update game world by the time that has passe // since last rendered frame.
             worldController.update(deltaTime);
+            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         }
         // Sets the clear screen color to: Cornflower Blue
         Gdx.gl.glClearColor(0x64 / 255.0f, 0x95 / 255.0f,
                 0xed / 255.0f, 0xff / 255.0f); // Clears the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Render game world to screen
         worldRenderer.render();
+        stage.draw();
     }
 
     @Override
@@ -46,11 +64,17 @@ public class GameScreen extends AbstractGameScreen {
         worldRenderer = new WorldRenderer(worldController);
         inputManager = new InputManager(worldController);
         //Gdx.input.setCatchBackKey(true);
+
+        stage = new Stage(new ScreenViewport());
+        testWindow = new TestWindow(this);
+        testWindow.show();
+
     }
 
     @Override
     public void hide() {
         worldRenderer.dispose();
+        stage.dispose();
         //Gdx.input.setCatchBackKey(false);
     }
 

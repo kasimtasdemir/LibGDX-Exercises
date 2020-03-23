@@ -14,7 +14,7 @@ public class InputManager extends InputAdapter {
     }
 
     public void init() {
-        Gdx.input.setInputProcessor(this);
+        //Gdx.input.setInputProcessor(this);
     }
 
     @Override

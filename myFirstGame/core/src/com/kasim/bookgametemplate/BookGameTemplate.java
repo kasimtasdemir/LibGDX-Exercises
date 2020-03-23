@@ -28,6 +28,8 @@ public class BookGameTemplate extends Game {
     @Override
     public void dispose() {
         Assets.instance.dispose();
+        gameScreen.dispose();
+        menuScreen.dispose();
     }
 
 
