@@ -13,7 +13,7 @@ public class WorldController implements Disposable {
     private static final String TAG =
             WorldController.class.getName();
 
-    private BookGameTemplate game;
+    public BookGameTemplate game;
     public CameraHelper cameraHelper;
     public Level level;
     public World box2dWorld;

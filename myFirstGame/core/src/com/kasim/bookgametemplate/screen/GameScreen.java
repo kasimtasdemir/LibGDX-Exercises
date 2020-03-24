@@ -4,6 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -27,6 +31,10 @@ public class GameScreen extends AbstractGameScreen {
     public InputManager inputManager;
     private BookGameTemplate game;
     private boolean paused;
+
+
+    public TiledMap tiledMap;
+    public TiledMapRenderer tiledMapRenderer;
 
 
     public Stage stage; // For UI
@@ -66,8 +74,11 @@ public class GameScreen extends AbstractGameScreen {
         //Gdx.input.setCatchBackKey(true);
 
         stage = new Stage(new ScreenViewport());
-        testWindow = new TestWindow(this);
-        testWindow.show();
+        //testWindow = new TestWindow(this);
+        //testWindow.show();
+
+        tiledMap = new TmxMapLoader().load("maps/TestCollectionOfImagesMap_1.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,1/40f);
 
     }
 
