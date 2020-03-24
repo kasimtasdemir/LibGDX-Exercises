@@ -24,7 +24,7 @@ public class TestBox2DDynamicObject extends AbstractDrawableObject {
         dimension.set(1f, 1f);
         rotation = 0;
         scale.set(1, 1);
-        position.set(0f, 0f);
+        position.set(2.5f, 2.5f);
         positionOffset.set(-dimension.x / 2, -dimension.y / 2);
         position.add(positionOffset);
         origin.set(dimension.x / 2, dimension.y / 2);

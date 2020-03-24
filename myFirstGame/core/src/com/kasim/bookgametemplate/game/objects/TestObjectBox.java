@@ -18,7 +18,7 @@ public class TestObjectBox extends AbstractDrawableObject {
         dimension.set(1f, 1f);
         rotation = 10;
         scale.set(1, 1);
-        position.set(-0.5f, -0.5f);
+        position.set(2f, 2f);
         origin.set(dimension.x / 2, dimension.y / 2);
         testBox = Assets.instance.testObjectBox.box;
         Gdx.app.debug(TAG, "TestObjectBox->init() testBox width: " + testBox.getRegionWidth());

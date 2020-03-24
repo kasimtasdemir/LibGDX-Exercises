@@ -17,7 +17,7 @@ public class TestBox2DStaticObject extends AbstractDrawableObject {
         // Create our body definition
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
-        groundBodyDef.position.set(new Vector2(0, -2));
+        groundBodyDef.position.set(new Vector2(2.5f, 0.5f));
 
         // Create a body from the defintion and add it to the world
         Body groundBody = box2dWorld.createBody(groundBodyDef);

@@ -30,16 +30,16 @@ public class WorldRenderer implements Disposable {
         camera.position.set(0, 0, 0);
         camera.update();
 
-        cameraTilemap = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
+        /* cameraTilemap = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
                         Constants.VIEWPORT_HEIGHT);
         //cameraTilemap = new OrthographicCamera(graphics.getWidth(),
         //        graphics.getHeight());
-        cameraTilemap.setToOrtho(false,Constants.VIEWPORT_WIDTH,
-                Constants.VIEWPORT_HEIGHT);
+        //cameraTilemap.setToOrtho(false,Constants.VIEWPORT_WIDTH,
+        //        Constants.VIEWPORT_HEIGHT);
 
         cameraTilemap.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2, 0);
-        cameraTilemap.update();
+        cameraTilemap.update(); */
     }
 
     public void render() {
@@ -51,8 +51,11 @@ public class WorldRenderer implements Disposable {
     private void renderWorld(SpriteBatchWDebug batch) {
         worldController.cameraHelper.applyTo(camera);
 
-        cameraTilemap.update();
-        worldController.game.gameScreen.tiledMapRenderer.setView(cameraTilemap);
+        //cameraTilemap.update();
+        camera.position.set(Constants.VIEWPORT_WIDTH/2,
+                Constants.VIEWPORT_HEIGHT/2,0);
+        camera.update();
+        worldController.game.gameScreen.tiledMapRenderer.setView(camera);
         worldController.game.gameScreen.tiledMapRenderer.render();
 
         batch.setProjectionMatrix(camera.combined);
@@ -67,11 +70,11 @@ public class WorldRenderer implements Disposable {
         camera.update();
         //(Constants.VIEWPORT_HEIGHT / height) * width;
         //cameraTilemap.update();
-        cameraTilemap.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
+        /* cameraTilemap.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
         //cameraTilemap.viewportHeight = height;
         cameraTilemap.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2,0);
-        cameraTilemap.update();
+        cameraTilemap.update(); */
     }
 
     @Override
