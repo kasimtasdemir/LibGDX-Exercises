@@ -51,13 +51,10 @@ public class WorldRenderer implements Disposable {
         camera.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
-        worldController.game.gameScreen.tileMapProcessor.setView(camera);
-        worldController.game.gameScreen.tileMapProcessor.render();
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        worldController.level.render(batch);
-        batch.end();
+
+        worldController.level.render(batch, camera);
+
 
     }
 

@@ -41,10 +41,12 @@ public class WorldController implements Disposable {
     @Override
     public void dispose() {
         box2dWorld.dispose();
+        level.dispose();
     }
 
     public void backToMenu () {
         // switch to menu screen
         game.setScreen(game.menuScreen);
     }
+
 }

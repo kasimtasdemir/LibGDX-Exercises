@@ -2,18 +2,14 @@ package com.kasim.bookgametemplate.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kasim.bookgametemplate.BookGameTemplate;
 import com.kasim.bookgametemplate.game.InputManager;
-import com.kasim.bookgametemplate.game.TileMapProcessor;
 import com.kasim.bookgametemplate.game.WorldController;
 import com.kasim.bookgametemplate.game.WorldRenderer;
 import com.kasim.bookgametemplate.ui.TestWindow;
-import com.kasim.bookgametemplate.util.Constants;
 
 public class GameScreen extends AbstractGameScreen {
     private static final String TAG = GameScreen.class.getName();
@@ -24,8 +20,6 @@ public class GameScreen extends AbstractGameScreen {
     private boolean paused;
 
 
-
-    public TileMapProcessor tileMapProcessor;
 
 
     public Stage stage; // For UI
@@ -68,8 +62,7 @@ public class GameScreen extends AbstractGameScreen {
         //testWindow = new TestWindow(this);
         //testWindow.show();
 
-        tileMapProcessor = new TileMapProcessor(Constants.TILEMAP_TMX_PATH, 1/ Constants.TILEMAP_PPM); // 32x32 tilemap
-        // cube is 1x1 m  in this world
+
 
     }
 
@@ -77,7 +70,6 @@ public class GameScreen extends AbstractGameScreen {
     public void hide() {
         worldRenderer.dispose();
         stage.dispose();
-        tileMapProcessor.dispose();
         //Gdx.input.setCatchBackKey(false);
     }
 

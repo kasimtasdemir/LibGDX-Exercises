@@ -14,5 +14,5 @@ public class Constants {
             "skin/uiskin.json";
     // Tilemap unit scale, pixel per meter
     public static final float TILEMAP_PPM = 32.0f;
-    public static final String TILEMAP_TMX_PATH = "maps/TestCollectionOfImagesMap_1.tmx";
+    public static final String TILEMAP_TMX_PATH = "maps/Level_1.tmx";
 }

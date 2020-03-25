@@ -20,8 +20,8 @@ public class BookGameTemplate extends Game {
         Assets.instance.init(new AssetManager());
         menuScreen = new MenuScreen(this);
         gameScreen = new GameScreen(this);
-        setScreen(menuScreen);
-        //setScreen(new GameScreen(this));
+        //setScreen(menuScreen);
+        setScreen(gameScreen);
     }
 
 
