@@ -30,7 +30,7 @@ public class WorldController implements Disposable {
     }
 
     public void update(float deltaTime) {
-        level.update(deltaTime);
+        level.update(deltaTime); // updates box2d world
         cameraHelper.update(deltaTime);
     }
 

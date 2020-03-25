@@ -1,14 +1,10 @@
 package com.kasim.bookgametemplate.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.util.Constants;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
-
-import static com.badlogic.gdx.Gdx.graphics;
 
 public class WorldRenderer implements Disposable {
     private OrthographicCamera camera;
@@ -55,8 +51,8 @@ public class WorldRenderer implements Disposable {
         camera.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
-        worldController.game.gameScreen.tiledMapRenderer.setView(camera);
-        worldController.game.gameScreen.tiledMapRenderer.render();
+        worldController.game.gameScreen.tileMapProcessor.setView(camera);
+        worldController.game.gameScreen.tileMapProcessor.render();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
