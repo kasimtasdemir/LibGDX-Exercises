@@ -36,6 +36,6 @@ public class BookGameTemplate extends Game {
 
     @Override
     public void resume() {
-        //Assets.instance.init(new AssetManager());
+        Assets.instance.init(new AssetManager());
     }
 }

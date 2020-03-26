@@ -49,16 +49,16 @@ public class Level implements Disposable {
         box2dRectangleStaticObjects = new ArrayList<Box2dRectangleStaticObject>();
         //testBox2DDynamicObjects.add(testBox2DDynamicObject);
 
-        /*tileMapProcessor = new TileMapProcessor(Constants.TILEMAP_TMX_PATH, 1 / Constants.TILEMAP_PPM); // 32x32 tilemap
+        tileMapProcessor = new TileMapProcessor(Constants.TILEMAP_TMX_PATH, 1 / Constants.TILEMAP_PPM); // 32x32 tilemap
         // cube is 1x1 m  in this world
 
-        tileMapProcessor.createBox2dObjects();*/
+        tileMapProcessor.createBox2dObjects();
         Gdx.app.debug(TAG, "Level->init() testObjectBox dimension: " + testObjectBox.dimension);
     }
 
     public void render(SpriteBatchWDebug batch, OrthographicCamera camera) {
-        /*tileMapProcessor.setView(camera);
-        tileMapProcessor.render();*/
+        tileMapProcessor.setView(camera);
+        tileMapProcessor.render();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -82,7 +82,7 @@ public class Level implements Disposable {
 
     @Override
     public void dispose() {
-        //tileMapProcessor.dispose();
+        tileMapProcessor.dispose();
     }
 
     public class TileMapProcessor implements Disposable {
