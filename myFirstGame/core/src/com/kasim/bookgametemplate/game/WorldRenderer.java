@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.util.Constants;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
+import static com.badlogic.gdx.Gdx.graphics;
+
 public class WorldRenderer implements Disposable {
     private OrthographicCamera camera;
     private SpriteBatchWDebug batch;
@@ -23,6 +25,7 @@ public class WorldRenderer implements Disposable {
         batch = new SpriteBatchWDebug();
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
                 Constants.VIEWPORT_HEIGHT);
+        camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / graphics.getHeight()) * graphics.getWidth();
         camera.position.set(0, 0, 0);
         camera.update();
 
@@ -54,8 +57,6 @@ public class WorldRenderer implements Disposable {
 
 
         worldController.level.render(batch, camera);
-
-
     }
 
     public void resize(int width, int height) {

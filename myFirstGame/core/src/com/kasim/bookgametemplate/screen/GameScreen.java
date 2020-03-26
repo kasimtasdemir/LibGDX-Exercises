@@ -53,24 +53,16 @@ public class GameScreen extends AbstractGameScreen {
 
     @Override
     public void show() {
-        worldController = new WorldController(game);
-        worldRenderer = new WorldRenderer(worldController);
-        inputManager = new InputManager(worldController);
-        //Gdx.input.setCatchBackKey(true);
-
-        stage = new Stage(new ScreenViewport());
+        init();
         //testWindow = new TestWindow(this);
         //testWindow.show();
-
-
-
     }
 
     @Override
     public void hide() {
         worldRenderer.dispose();
+        worldController.dispose();
         stage.dispose();
-        //Gdx.input.setCatchBackKey(false);
     }
 
     @Override
@@ -83,5 +75,13 @@ public class GameScreen extends AbstractGameScreen {
         super.resume();
         // Only called on Android!
         paused = false;
+    }
+
+    public void init() {
+        worldController = new WorldController(game);
+        worldRenderer = new WorldRenderer(worldController);
+        inputManager = new InputManager(worldController);
+
+        stage = new Stage(new ScreenViewport());
     }
 }
