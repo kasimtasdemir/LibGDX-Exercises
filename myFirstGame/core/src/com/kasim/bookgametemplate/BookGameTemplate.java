@@ -9,6 +9,7 @@ import com.kasim.bookgametemplate.screen.GameScreen;
 import com.kasim.bookgametemplate.screen.MenuScreen;
 
 public class BookGameTemplate extends Game {
+
     private static final String TAG = BookGameTemplate.class.getName();
     public MenuScreen menuScreen;
     public GameScreen gameScreen;
@@ -35,6 +36,6 @@ public class BookGameTemplate extends Game {
 
     @Override
     public void resume() {
-        Assets.instance.init(new AssetManager());
+        //Assets.instance.init(new AssetManager());
     }
 }

@@ -26,7 +26,9 @@ public class WorldRenderer implements Disposable {
         camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
                 Constants.VIEWPORT_HEIGHT);
         camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / graphics.getHeight()) * graphics.getWidth();
-        camera.position.set(0, 0, 0);
+        //camera.position.set(0, 0, 0);
+        camera.position.set(Constants.VIEWPORT_WIDTH/2,
+                Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
 
         /* cameraTilemap = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
@@ -44,16 +46,17 @@ public class WorldRenderer implements Disposable {
     public void render() {
 
         renderWorld(batch);
-        debugRenderer.render(worldController.box2dWorld, camera.combined);
+        if(Constants.RENDER_DEBUG_ENABLED)
+            debugRenderer.render(worldController.box2dWorld, camera.combined);
     }
 
     private void renderWorld(SpriteBatchWDebug batch) {
-        worldController.cameraHelper.applyTo(camera);
+        //worldController.cameraHelper.applyTo(camera);
 
         //cameraTilemap.update();
-        camera.position.set(Constants.VIEWPORT_WIDTH/2,
+        /*camera.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2,0);
-        camera.update();
+        camera.update();*/
 
 
         worldController.level.render(batch, camera);
@@ -61,6 +64,8 @@ public class WorldRenderer implements Disposable {
 
     public void resize(int width, int height) {
         camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
+        camera.position.set(Constants.VIEWPORT_WIDTH/2,
+                Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
         //(Constants.VIEWPORT_HEIGHT / height) * width;
         //cameraTilemap.update();

@@ -916,6 +916,12 @@
  </tile>
  <tile id="296">
   <image width="16" height="28" source="../images/dungeon_collection/wizzard_f_idle_anim_f0.png"/>
+  <animation>
+   <frame tileid="296" duration="100"/>
+   <frame tileid="297" duration="100"/>
+   <frame tileid="298" duration="100"/>
+   <frame tileid="299" duration="100"/>
+  </animation>
  </tile>
  <tile id="297">
   <image width="16" height="28" source="../images/dungeon_collection/wizzard_f_idle_anim_f1.png"/>

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class SpriteBatchWDebug extends SpriteBatch {
     @Override
@@ -22,12 +23,27 @@ public class SpriteBatchWDebug extends SpriteBatch {
     void drawDebugBox(Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX, float scaleY, float rotation) {
         if (!Constants.RENDER_DEBUG_ENABLED)
             return;
-        Pixmap pixmap = createPixmapBox(50, (int) (50 / width * height));//(texture.getWidth()/4, texture.getHeight()/4);
-        Texture boxTexture = new Texture(pixmap);
-        Sprite spr = new Sprite(boxTexture);
-        super.draw(spr, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        // Pixmap pixmap = createPixmapBox(50, (int) (50 / width * height));//(texture.getWidth()/4, texture.getHeight()/4);
+
+
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(super.getProjectionMatrix());
+
+        super.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1,0.2f,0.0f,1f);
+        //shapeRenderer.identity();
+        shapeRenderer.rect(x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        shapeRenderer.end();
+        shapeRenderer.dispose();
+
+        super.begin();
+
+        //Texture boxTexture = new Texture(pixmap);
+        //Sprite spr = new Sprite(boxTexture);
+        //super.draw(spr, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
         //boxTexture.dispose(); // TODO: I think this is leaking. Must dispose boxTexture
-        pixmap.dispose();
+        //pixmap.dispose();
     }
 
     private Pixmap createPixmapBox(int width, int height) {
