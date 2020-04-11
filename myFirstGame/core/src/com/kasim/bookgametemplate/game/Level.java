@@ -6,13 +6,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.game.objects.Box2dRectangleObject;
 import com.kasim.bookgametemplate.game.objects.Box2dRectangleStaticObject;
 import com.kasim.bookgametemplate.game.objects.DrawableObject;
 import com.kasim.bookgametemplate.game.objects.TestBox2DDynamicObject;
-import com.kasim.bookgametemplate.game.objects.TestBox2DStaticObject;
 import com.kasim.bookgametemplate.game.objects.TestObjectBox;
 import com.kasim.bookgametemplate.game.objects.TestPlayer1;
 import com.kasim.bookgametemplate.util.Constants;
@@ -89,10 +89,23 @@ public class Level implements Disposable {
         //private final String TAG = com.kasim.bookgametemplate.game.TileMapProcessor.class.getName();
         public TiledMap tiledMap;
         public OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+        public Rectangle tilemapBoundaries;
+
 
         public TileMapProcessor(String tileMapPath, float unitScale) {
             loadTileMap(tileMapPath);
             initOrthogonalTiledMapRenderer(tiledMap, unitScale);
+            initTilemapBoundaries();
+        }
+
+        private void initTilemapBoundaries() {
+            tilemapBoundaries = new Rectangle();
+            TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+            tilemapBoundaries.x = 0;
+            tilemapBoundaries.y = 0;
+            tilemapBoundaries.width = layer.getWidth() * layer.getTileWidth() / Constants.TILEMAP_PPM;
+            tilemapBoundaries.height = layer.getHeight() * layer.getTileHeight() / Constants.TILEMAP_PPM;
+            Gdx.app.debug(TAG, "Tilemap Boundaries: " + tilemapBoundaries);
         }
 
         private void initOrthogonalTiledMapRenderer(TiledMap tiledMap, float unitScale) {
@@ -134,12 +147,12 @@ public class Level implements Disposable {
 
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
-                        Gdx.app.debug(TAG, "createBox2dDynamicObject cell with texture x, y, w, h: " +
-                                x + ", " + y + ", " +
-                                layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() +
-                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
-                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
-                        );
+//                        Gdx.app.debug(TAG, "createBox2dDynamicObject cell with texture x, y, w, h: " +
+//                                x + ", " + y + ", " +
+//                                layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() +
+//                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
+//                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
+//                        );
                         DrawableObject newDrawableObject = new DrawableObject();
                         newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
                                 y * layer.getTileHeight() / Constants.TILEMAP_PPM);
@@ -174,12 +187,12 @@ public class Level implements Disposable {
 
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
-                        Gdx.app.debug(TAG, "createBox2dStaticObject cell with texture x, y, w, h: " +
-                                x + ", " + y + ", " +
-                                layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() +
-                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
-                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
-                        );
+//                        Gdx.app.debug(TAG, "createBox2dStaticObject cell with texture x, y, w, h: " +
+//                                x + ", " + y + ", " +
+//                                layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() +
+//                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
+//                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
+//                        );
                         DrawableObject newDrawableObject = new DrawableObject();
                         newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
                                 y * layer.getTileHeight() / Constants.TILEMAP_PPM);

@@ -31,6 +31,8 @@ public class WorldRenderer implements Disposable {
                 Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
 
+
+
         /* cameraTilemap = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
                         Constants.VIEWPORT_HEIGHT);
         //cameraTilemap = new OrthographicCamera(graphics.getWidth(),
@@ -59,6 +61,7 @@ public class WorldRenderer implements Disposable {
         camera.update();*/
 
 
+        worldController.cameraHelper.applyTo(camera);
         worldController.level.render(batch, camera);
     }
 
@@ -67,6 +70,8 @@ public class WorldRenderer implements Disposable {
         camera.position.set(Constants.VIEWPORT_WIDTH/2,
                 Constants.VIEWPORT_HEIGHT/2,0);
         camera.update();
+
+
         //(Constants.VIEWPORT_HEIGHT / height) * width;
         //cameraTilemap.update();
         /* cameraTilemap.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
