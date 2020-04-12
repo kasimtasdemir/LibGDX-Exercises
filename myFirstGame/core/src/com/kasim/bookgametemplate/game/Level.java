@@ -76,6 +76,7 @@ public class Level implements Disposable {
     }
 
     public void update(float deltaTime) {
+        testPlayer1.update(deltaTime);
         box2dWorld.step(1 / 60f, 6, 2);
         testObjectBox.update(deltaTime);
     }

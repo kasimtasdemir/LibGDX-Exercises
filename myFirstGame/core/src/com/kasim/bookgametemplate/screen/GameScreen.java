@@ -80,6 +80,7 @@ public class GameScreen extends AbstractGameScreen {
     public void init() {
         worldController = new WorldController(game);
         worldRenderer = new WorldRenderer(worldController);
+        worldController.setWorldRenderer(worldRenderer);
         inputManager = new InputManager(worldController);
 
         stage = new Stage(new ScreenViewport());

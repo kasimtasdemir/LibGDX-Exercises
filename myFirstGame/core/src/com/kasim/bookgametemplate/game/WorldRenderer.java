@@ -9,7 +9,7 @@ import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 import static com.badlogic.gdx.Gdx.graphics;
 
 public class WorldRenderer implements Disposable {
-    private OrthographicCamera camera;
+    public OrthographicCamera camera;
     private SpriteBatchWDebug batch;
     private WorldController worldController;
     public Box2DDebugRenderer debugRenderer;
@@ -48,7 +48,7 @@ public class WorldRenderer implements Disposable {
     public void render() {
 
         renderWorld(batch);
-        if(Constants.RENDER_DEBUG_ENABLED)
+        if(Constants.RENDER_BOX2D_DEBUG_ENABLED)
             debugRenderer.render(worldController.box2dWorld, camera.combined);
     }
 

@@ -3,6 +3,7 @@ package com.kasim.bookgametemplate.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.kasim.bookgametemplate.util.Constants;
 
 public class InputManager extends InputAdapter {
     public static final String TAG = InputManager.class.getName();
@@ -19,23 +20,33 @@ public class InputManager extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        // Reset game world
-        if (keycode == Input.Keys.R) {
-            Gdx.app.debug(TAG, "User request: " + "Game world reset");
-            worldController.userRequest_resetGame();
+        switch (keycode){
+            case Input.Keys.R:
+                Gdx.app.debug(TAG, "User request: " + "RESET_GAME");
+                worldController.userRequest(Constants.UserRequest.RESET_GAME);
+                break;
+            case Input.Keys.SPACE:
+                worldController.userRequest(Constants.UserRequest.PLAYER_JUMP);
+                break;
+            case Input.Keys.ENTER:
+                break;
+            case Input.Keys.ESCAPE:
+                Gdx.app.debug(TAG, "User request: " + "BACK_TO_MENU");
+                worldController.userRequest(Constants.UserRequest.BACK_TO_MENU);
+                break;
+            default:
+                return false;
         }
-        // Select next sprite
-        else if (keycode == Input.Keys.SPACE) {
-
-        }
-        // Toggle camera follow
-        else if (keycode == Input.Keys.ENTER) {
-        }
-        else if (keycode == Input.Keys.ESCAPE) {
-            //change to menu screen
-            Gdx.app.debug(TAG, "User request: " + "Back to menu");
-            worldController.backToMenu();
-        }
-        return false;
+        return true;
     }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //Gdx.app.debug(TAG, "Touch Down (screenX, screenY, pointer, button): " +
+        //        screenX + ", " + screenY + ", " + pointer + ", " + button);
+        worldController.userRequest(Constants.UserRequest.PLAYER_JUMP);
+        worldController.userTouchDown(screenX, screenY);
+        return true;
+    }
+
 }
