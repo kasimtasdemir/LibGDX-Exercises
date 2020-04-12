@@ -40,7 +40,7 @@ public class TestBox2DDynamicObject extends AbstractDrawableObject {
         position.add(positionOffset);
         origin = drawableObject.origin;
 
-        testBox = drawableObject.textureRegion;
+        testBox = drawableObject.tile.getTextureRegion();
 
         init();
     }

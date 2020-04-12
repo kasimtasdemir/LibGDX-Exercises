@@ -13,9 +13,11 @@ import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 public class Box2dRectangleStaticObject extends AbstractDrawableObject {
     World box2dWorld;
     Body body;
-    public TextureRegion textureRegion;
+    private TextureRegion textureRegion;
+    private DrawableObject drawableObject;
 
     public Box2dRectangleStaticObject(World box2dWorld, DrawableObject drawableObject){
+        this.drawableObject = drawableObject;
         this.box2dWorld = box2dWorld;
         // default values
         dimension = drawableObject.dimension;
@@ -27,7 +29,7 @@ public class Box2dRectangleStaticObject extends AbstractDrawableObject {
         position.sub(positionOffset);
         origin = drawableObject.origin;
 
-        textureRegion = drawableObject.textureRegion;
+        textureRegion = drawableObject.tile.getTextureRegion(); //drawableObject.textureRegion;
 
         init();
     }
@@ -61,6 +63,8 @@ public class Box2dRectangleStaticObject extends AbstractDrawableObject {
 
     @Override
     public void render(SpriteBatchWDebug batch) {
+        textureRegion = drawableObject.tile.getTextureRegion();
+
         position = body.getPosition().add(positionOffset);
         rotation = body.getAngle()* MathUtils.radiansToDegrees;
         batch.draw(textureRegion.getTexture(),

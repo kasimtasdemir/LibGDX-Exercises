@@ -2,10 +2,13 @@ package com.kasim.bookgametemplate.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
@@ -115,6 +118,7 @@ public class Level implements Disposable {
 
         private void loadTileMap(String tileMapPath) {
             tiledMap = new TmxMapLoader().load(tileMapPath);
+
         }
 
         @Override
@@ -135,6 +139,7 @@ public class Level implements Disposable {
         public void createBox2dObjects() {
             createBox2dDynamicObjects();
             createBox2dStaticObjects();
+            //createAnimatedObjects();
         }
 
         public void createBox2dDynamicObjects() {
@@ -145,6 +150,7 @@ public class Level implements Disposable {
                 for (int x = 0; x < layer.getWidth(); x++) {
                     //if (layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() != 0){
                     if (layer.getCell(x, y) != null) {
+                        TiledMapTile tile = layer.getCell(x, y).getTile();
 
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
@@ -154,13 +160,13 @@ public class Level implements Disposable {
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
 //                        );
-                        DrawableObject newDrawableObject = new DrawableObject();
+                        DrawableObject newDrawableObject = new DrawableObject(tile);
                         newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
                                 y * layer.getTileHeight() / Constants.TILEMAP_PPM);
-                        newDrawableObject.textureRegion = layer.getCell(x, y).getTile().getTextureRegion();
+                        TextureRegion textureRegion = tile.getTextureRegion();
                         newDrawableObject.dimension.set(
-                                newDrawableObject.textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
-                                newDrawableObject.textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
+                                textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
+                                textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
                         );
                         newDrawableObject.positionOffset.set(-newDrawableObject.dimension.x / 2f,
                                 -newDrawableObject.dimension.y / 2f);
@@ -170,6 +176,7 @@ public class Level implements Disposable {
                         Box2dRectangleObject newDynamicObject = new Box2dRectangleObject(box2dWorld, newDrawableObject);
                         //testBox2DDynamicObjects.add(newDynamicObject);
                         box2dRectangleObjects.add(newDynamicObject);
+
 
                     }
                 }
@@ -185,7 +192,7 @@ public class Level implements Disposable {
                 for (int x = 0; x < layer.getWidth(); x++) {
                     //if (layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() != 0){
                     if (layer.getCell(x, y) != null) {
-
+                        TiledMapTile tile = layer.getCell(x, y).getTile();
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
 //                        Gdx.app.debug(TAG, "createBox2dStaticObject cell with texture x, y, w, h: " +
@@ -194,13 +201,13 @@ public class Level implements Disposable {
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
 //                        );
-                        DrawableObject newDrawableObject = new DrawableObject();
+                        DrawableObject newDrawableObject = new DrawableObject(tile);
                         newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
                                 y * layer.getTileHeight() / Constants.TILEMAP_PPM);
-                        newDrawableObject.textureRegion = layer.getCell(x, y).getTile().getTextureRegion();
+                        TextureRegion textureRegion = tile.getTextureRegion();
                         newDrawableObject.dimension.set(
-                                newDrawableObject.textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
-                                newDrawableObject.textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
+                                textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
+                                textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
                         );
                         newDrawableObject.positionOffset.set(-newDrawableObject.dimension.x / 2f,
                                 -newDrawableObject.dimension.y / 2f);
@@ -216,6 +223,54 @@ public class Level implements Disposable {
             }
 
         }
+
+//        public void createAnimatedObjects() {
+//            TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("animations");
+//
+//
+//            for (int y = 0; y < layer.getHeight(); y++) {
+//                for (int x = 0; x < layer.getWidth(); x++) {
+//                    //if (layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() != 0){
+//                    if (layer.getCell(x, y) != null) {
+//
+//                        //int tileX = x;
+//                        //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
+////                        Gdx.app.debug(TAG, "createBox2dDynamicObject cell with texture x, y, w, h: " +
+////                                x + ", " + y + ", " +
+////                                layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() +
+////                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
+////                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
+////                        );
+//                        DrawableObject newDrawableObject = new DrawableObject();
+//                        newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
+//                                y * layer.getTileHeight() / Constants.TILEMAP_PPM);
+//                        newDrawableObject.textureRegion = layer.getCell(x, y).getTile().getTextureRegion();
+//                        newDrawableObject.dimension.set(
+//                                newDrawableObject.textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
+//                                newDrawableObject.textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
+//                        );
+//                        newDrawableObject.positionOffset.set(-newDrawableObject.dimension.x / 2f,
+//                                -newDrawableObject.dimension.y / 2f);
+//                        newDrawableObject.origin.set(newDrawableObject.dimension.x / 2f,
+//                                newDrawableObject.dimension.y / 2f);
+//
+//                        //Box2dRectangleObject newDynamicObject = new Box2dRectangleObject(box2dWorld, newDrawableObject);
+//                        //testBox2DDynamicObjects.add(newDynamicObject);
+//                        //box2dRectangleObjects.add(newDynamicObject);
+//
+//                        // The following code is unnecessary. getTextureRegion returns the current texture.
+//                        if(layer.getCell(x, y).getTile().getClass()== AnimatedTiledMapTile.class){
+//                            AnimatedTiledMapTile animTile = (AnimatedTiledMapTile) layer.getCell(x, y).getTile();
+//                            for (int k=0; k < animTile.getAnimationIntervals().length; k++) {
+//                                animTile.getFrameTiles()[k].getTextureRegion();
+//                                animTile.getAnimationIntervals();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
     }
 
 

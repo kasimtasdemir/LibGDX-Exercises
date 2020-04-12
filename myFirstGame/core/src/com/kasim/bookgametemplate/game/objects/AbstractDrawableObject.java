@@ -1,5 +1,6 @@
 package com.kasim.bookgametemplate.game.objects;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
 
