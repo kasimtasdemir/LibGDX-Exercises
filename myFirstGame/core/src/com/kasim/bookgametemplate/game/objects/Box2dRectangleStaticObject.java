@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasim.bookgametemplate.util.SpriteBatchWDebug;
@@ -14,22 +13,22 @@ public class Box2dRectangleStaticObject extends AbstractDrawableObject {
     World box2dWorld;
     Body body;
     private TextureRegion textureRegion;
-    private DrawableObject drawableObject;
+    private DrawableTile drawableTile;
 
-    public Box2dRectangleStaticObject(World box2dWorld, DrawableObject drawableObject){
-        this.drawableObject = drawableObject;
+    public Box2dRectangleStaticObject(World box2dWorld, DrawableTile drawableTile){
+        this.drawableTile = drawableTile;
         this.box2dWorld = box2dWorld;
         // default values
-        dimension = drawableObject.dimension;
-        rotation = drawableObject.rotation;
-        scale = drawableObject.scale;
-        position = drawableObject.position;
+        dimension = drawableTile.dimension;
+        rotation = drawableTile.rotation;
+        scale = drawableTile.scale;
+        position = drawableTile.position;
 
-        positionOffset = drawableObject.positionOffset;
+        positionOffset = drawableTile.positionOffset;
         position.sub(positionOffset);
-        origin = drawableObject.origin;
+        origin = drawableTile.origin;
 
-        textureRegion = drawableObject.tile.getTextureRegion(); //drawableObject.textureRegion;
+        textureRegion = drawableTile.getTextureRegion(); //drawableObject.textureRegion;
 
         init();
     }
@@ -63,7 +62,7 @@ public class Box2dRectangleStaticObject extends AbstractDrawableObject {
 
     @Override
     public void render(SpriteBatchWDebug batch) {
-        textureRegion = drawableObject.tile.getTextureRegion();
+        textureRegion = drawableTile.getTextureRegion();
 
         position = body.getPosition().add(positionOffset);
         rotation = body.getAngle()* MathUtils.radiansToDegrees;

@@ -29,18 +29,18 @@ public class TestBox2DDynamicObject extends AbstractDrawableObject {
 
         init();
     }
-    public TestBox2DDynamicObject(World box2dWorld, DrawableObject drawableObject){
+    public TestBox2DDynamicObject(World box2dWorld, DrawableTile drawableTile){
         this.box2dWorld = box2dWorld;
         // default values
-        dimension = drawableObject.dimension;
-        rotation = drawableObject.rotation;
-        scale = drawableObject.scale;
-        position = drawableObject.position;
-        positionOffset = drawableObject.positionOffset;
+        dimension = drawableTile.dimension;
+        rotation = drawableTile.rotation;
+        scale = drawableTile.scale;
+        position = drawableTile.position;
+        positionOffset = drawableTile.positionOffset;
         position.add(positionOffset);
-        origin = drawableObject.origin;
+        origin = drawableTile.origin;
 
-        testBox = drawableObject.tile.getTextureRegion();
+        testBox = drawableTile.getTextureRegion();
 
         init();
     }

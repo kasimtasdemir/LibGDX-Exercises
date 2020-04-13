@@ -8,13 +8,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.kasim.bookgametemplate.game.objects.Box2dRectangleObject;
 import com.kasim.bookgametemplate.game.objects.Box2dRectangleStaticObject;
-import com.kasim.bookgametemplate.game.objects.DrawableObject;
+import com.kasim.bookgametemplate.game.objects.DrawableTile;
 import com.kasim.bookgametemplate.game.objects.TestBox2DDynamicObject;
 import com.kasim.bookgametemplate.game.objects.TestObjectBox;
 import com.kasim.bookgametemplate.game.objects.TestPlayer1;
@@ -150,7 +149,6 @@ public class Level implements Disposable {
                 for (int x = 0; x < layer.getWidth(); x++) {
                     //if (layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() != 0){
                     if (layer.getCell(x, y) != null) {
-                        TiledMapTile tile = layer.getCell(x, y).getTile();
 
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
@@ -160,20 +158,9 @@ public class Level implements Disposable {
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
 //                        );
-                        DrawableObject newDrawableObject = new DrawableObject(tile);
-                        newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
-                                y * layer.getTileHeight() / Constants.TILEMAP_PPM);
-                        TextureRegion textureRegion = tile.getTextureRegion();
-                        newDrawableObject.dimension.set(
-                                textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
-                                textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
-                        );
-                        newDrawableObject.positionOffset.set(-newDrawableObject.dimension.x / 2f,
-                                -newDrawableObject.dimension.y / 2f);
-                        newDrawableObject.origin.set(newDrawableObject.dimension.x / 2f,
-                                newDrawableObject.dimension.y / 2f);
+                        DrawableTile newDrawableTile = new DrawableTile(layer, x, y);
 
-                        Box2dRectangleObject newDynamicObject = new Box2dRectangleObject(box2dWorld, newDrawableObject);
+                        Box2dRectangleObject newDynamicObject = new Box2dRectangleObject(box2dWorld, newDrawableTile);
                         //testBox2DDynamicObjects.add(newDynamicObject);
                         box2dRectangleObjects.add(newDynamicObject);
 
@@ -192,7 +179,7 @@ public class Level implements Disposable {
                 for (int x = 0; x < layer.getWidth(); x++) {
                     //if (layer.getCell(x, y).getTile().getTextureRegion().getRegionWidth() != 0){
                     if (layer.getCell(x, y) != null) {
-                        TiledMapTile tile = layer.getCell(x, y).getTile();
+
                         //int tileX = x;
                         //int tileY = layerHightInTiles - 1  - y; // y down system to y up system
 //                        Gdx.app.debug(TAG, "createBox2dStaticObject cell with texture x, y, w, h: " +
@@ -201,20 +188,9 @@ public class Level implements Disposable {
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getRegionHeight() +
 //                                "," + layer.getCell(x, y).getTile().getTextureRegion().getTexture().getTextureData().toString()
 //                        );
-                        DrawableObject newDrawableObject = new DrawableObject(tile);
-                        newDrawableObject.position.set(x * layer.getTileWidth() / Constants.TILEMAP_PPM,
-                                y * layer.getTileHeight() / Constants.TILEMAP_PPM);
-                        TextureRegion textureRegion = tile.getTextureRegion();
-                        newDrawableObject.dimension.set(
-                                textureRegion.getRegionWidth() / Constants.TILEMAP_PPM,
-                                textureRegion.getRegionHeight() / Constants.TILEMAP_PPM
-                        );
-                        newDrawableObject.positionOffset.set(-newDrawableObject.dimension.x / 2f,
-                                -newDrawableObject.dimension.y / 2f);
-                        newDrawableObject.origin.set(newDrawableObject.dimension.x / 2f,
-                                newDrawableObject.dimension.y / 2f);
+                        DrawableTile newDrawableTile = new DrawableTile(layer, x, y);
 
-                        Box2dRectangleStaticObject newStaticObject = new Box2dRectangleStaticObject(box2dWorld, newDrawableObject);
+                        Box2dRectangleStaticObject newStaticObject = new Box2dRectangleStaticObject(box2dWorld, newDrawableTile);
                         //testBox2DDynamicObjects.add(newDynamicObject);
                         box2dRectangleStaticObjects.add(newStaticObject);
 
